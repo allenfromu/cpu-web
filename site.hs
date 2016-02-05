@@ -72,7 +72,9 @@ main = do
          compile $ copyFileCompiler
          compile $ pandocCompiler
              >>= loadAndApplyTemplate "templates/default.html" defaultContext
-             >>= relativizeUrls                    
+             >>= relativizeUrls
+
+
           
     match (fromList ["about.markdown", "services.markdown","projects.markdown",
                   "portfolio.markdown", "education.markdown","members.markdown",

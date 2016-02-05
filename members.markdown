@@ -9,6 +9,7 @@
 - [Prof. Mary Hall](http://www.cs.utah.edu/~mhall)
 
 ## Electrical and Computer Engineering:
+
 - Prof. Chris Myers
 - Prof. Priyank Kalla
 - Prof. Kenneth Stevens
