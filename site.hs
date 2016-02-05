@@ -75,7 +75,7 @@ main = do
              >>= relativizeUrls                    
           
     match (fromList ["about.markdown", "services.markdown","projects.markdown",
-                     "portfolio.markdown", "education.markdown",
+                  "portfolio.markdown", "education.markdown","members.markdown",
                      "talks.markdown"]) $ do
         route   $ setExtension "html"
         compile $ pandocCompiler
