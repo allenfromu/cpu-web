@@ -7,33 +7,17 @@ import System.Directory
 import System.Process
 
 
-rbrosFeedConfiguration :: FeedConfiguration
-rbrosFeedConfiguration = FeedConfiguration
-    { feedTitle = "Reichert Brothers Software Development"
-    , feedDescription = "Hacking and related"
-    , feedAuthorName = "Christopher Reichert"
-    , feedAuthorEmail = "christopher@reichertbrothers.com"
-    , feedRoot = "http://reichertbrothers.com"
-    }
+
 
 -- There are a few limitations to the Vroom compiler
 -- and I have not been able to get it working inside
 -- the Hakyll compiler system. This is a very elementary
 -- compilation process for Vroom slides.
-vroom :: [String] -> IO ()
-vroom [] = return ()
-vroom (t:ts) = do
-        _ <- system $ "vroom html --input=talks/hhug/" ++ t ++ ".vroom"
-        _ <- system $ "mkdir -p _site/talks/" ++ t
-        _ <- system $ "cp -r html/* _site/talks/" ++ t
-        vroom ts
 
 --------------------------------------------------------------------------------
 main :: IO ()
 main = do
 
-  ts <- getDirectoryContents "talks/hhug"
-  vroom $ map (dropEnd 6) $ filter (((==) "vroom") . dropEnd 5) ts
   hakyll $ do
 
     match "images/*" $ do
@@ -93,25 +77,7 @@ main = do
             >>= loadAndApplyTemplate "templates/default.html" postCtx
             >>= relativizeUrls
 
-    create ["atom.xml"] $ do
-        route idRoute
-        compile $ do
-            let feedCtx = postCtx <> bodyField "description"
-            posts <- fmap (take 10) . recentFirst =<<
-                loadAllSnapshots "blog/posts/*" "atom"
-            renderAtom rbrosFeedConfiguration feedCtx posts
 
-    create ["blog.html"] $ do
-        route idRoute
-        compile $ do
-            posts <- recentFirst =<< loadAllSnapshots "blog/posts/*" "content"
-            let ctx = constField "title" "Blog" <>
-                      listField "posts" (teaserField "teaser" "content" <> postCtx) (return posts) <>
-                      tagsCtx tags
-            makeItem ""
-                >>= loadAndApplyTemplate "templates/blog.html" ctx
-                >>= loadAndApplyTemplate "templates/default.html" ctx
-                >>= relativizeUrls
 
     match "index.html" $ do
         route idRoute
