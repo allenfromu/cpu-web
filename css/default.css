@@ -1,0 +1,40 @@
+
+#map {
+    margin-left:5%;
+    width: 50%;
+    min-height: 300px;
+}
+   
+
+bibtex { display: none; }
+#bibtex_errors { margin-top:10px; color: red;}
+
+* { font-family: "sans-serif" }
+body {
+}
+.page-container{
+    
+}
+
+
+.text-center {
+  padding-top: 20px;
+}
+
+
+.footerbar{
+
+
+    background:#6cf;
+}
+.footerbar ul{
+
+}
+
+
+.footerbar ul li{
+    list-style-type: none;    
+}
+
+
+

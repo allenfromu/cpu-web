@@ -1,0 +1,5 @@
+CPU's academic mission will include a strong emphasis on developing and disseminating new curricular material. There is an acute shortage of information on parallel programming techniques, verification techniques, and performance evaluation/tuning techniques. CPU will maintain a prominent web presence where educational resources in these areas will be maintained. It will invite EAB members to visit our campus and offer lectures on advanced topics which will tie into classes on parallelism taught by CPU members and others.
+
+The Director of CPU, <a href="http://www.cs.utah.edu/~ganesh/">Ganesh Gopalakrishnan</a>, in joint work with <a href="http://research.microsoft.com/">Microsoft Research</a>, developed a computer science curriculum in high level development of concurrent and parallel programs, known as PPCP, or Practical Parallel and Concurrent Programming. Please visit <a href="http://www.eng.utah.edu/~cs5955">this</a> link for the class webpage of the University of Utah's offering of PPCP for Fall 2010.
+
+<a href="http://www.cs.utah.edu/formal_verification/Concurrency_Education/">Please visit here</a> for examples of work in Concurrency Education.
