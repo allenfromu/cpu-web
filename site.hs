@@ -16,8 +16,11 @@ import System.Process
 
 --------------------------------------------------------------------------------
 main :: IO ()
+
+
 main = do
 
+  
   hakyll $ do
 
     match "images/*" $ do
@@ -51,7 +54,7 @@ main = do
                 >>= loadAndApplyTemplate "templates/default.html" ctx
                 >>= relativizeUrls
 
-    match (fromList ["publication.html","Contact.html"]) $ do
+    match (fromList ["publication.html","Contact.html","People.html","Software.html","Publications.html"]) $ do
          route idRoute
          compile $ copyFileCompiler
          compile $ pandocCompiler

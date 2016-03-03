@@ -91,7 +91,7 @@ class Parser:
             return self.value_quotes()
         else:
             k = self.key()
-            if self.strings[k].upper():
+            if k.upper() in self.strings:
                 return self.strings[k]
             elif re.match("^[0-9]+$", k) is not None:
                 return k
