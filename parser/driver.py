@@ -7,6 +7,12 @@ input = file.read()
 p = (parser.Parser(input)).getEntries()
 
 
+def split_crossref(s):
+    l = s.split(',')
+    ll = []
+    for a in l:
+        ll.append(a.strip())
+    return ll
 
 people = {}
 sw = {}
@@ -29,7 +35,7 @@ for k in people:
     v = people[k]
     html+='\n<li>'
     if 'TITLE' in v:
-        html = '\n<p>\n<span class = \"person_name\">'
+        html = '\n<p>\n<span name = \"'+k+'\">'
         if 'URL' in v and len(v['URL']) > 2:
             html+='\n<a href=\"'+v['URL']+'\">'+v['TITLE']
             html+='</a>'
@@ -41,7 +47,18 @@ for k in people:
             html+='\n<span>'
             html+=v['NOTES']+'\n</span>'
         if 'CROSSREF' in v:
-            html+='\n<br><span>Related:'+ v['CROSSREF']+'</span>'
+            ll = split_crossref(v['CROSSREF'])
+            html+='\n   <br> <span>Related: '
+            for a in ll:
+                if a in p:
+                    av = p[a]
+                    if 'TYPE' in av and av['TYPE']=='person':  
+                        html+='[<a href=\"\\People.html#'+a+'\">'+a+'</a>]'
+                    elif 'TYPE' in av and av['TYPE']=='software':  
+                        html+='[<a href=\"\\Software.html#'+a+'\">'+a+'</a>]'
+                    else:
+                        html+='[<a href=\"\\Publications.html#'+a+'\">'+a+'</a>]'
+            html+='\n </span>\n<br>'
         html+='\n</p>\n'
     html+='\n</li>'
 html += '\n</ul>'
@@ -55,7 +72,7 @@ for k in sw:
     v = sw[k]
     if 'TITLE' in v:
         html +='\n<li>'
-        html += '\n<p>\n<span class=\"sw_name\">'
+        html += '\n<p>\n<span name=\"'+k+'\">'
         if 'URL' in v and len(v['URL']) > 2:
             html+='\n<a href=\"'+v['URL']+'\">'+v['TITLE']
             html+='</a>'
@@ -67,7 +84,18 @@ for k in sw:
             html+='\n<span>'
             html+=v['NOTES']+'\n</span>'
         if 'CROSSREF' in v:
-            html+='\n<br><span>Related:'+ v['CROSSREF']+'</span>'
+            ll = split_crossref(v['CROSSREF'])
+            html+='\n    <br><span>Related: '
+            for a in ll:
+                if a in p:
+                    av = p[a]
+                    if 'TYPE' in av and av['TYPE']=='person':  
+                        html+='[<a href=\"\\People.html#'+a+'\">'+a+'</a>]'
+                    elif 'TYPE' in av and av['TYPE']=='software':  
+                        html+='[<a href=\"\\Software.html#'+a+'\">'+a+'</a>]'
+                    else:
+                        html+='[<a href=\"\\Publications.html#'+a+'\">'+a+'</a>]'
+            html+='\n     </span>\n    <br>'
         html+='\n</p>\n'
         html+='</li>'
 html+='\n</ul>'
@@ -94,7 +122,6 @@ def get_author_url(name):
             
 
 
-
 f3 = open('../Publications.html', 'w')
 
 #(key, year) tuple of pb
@@ -117,13 +144,13 @@ html = '<ul class = \"list-group\">'
 for y in years:
     keys = year_keys[y]
     html += '\n <li class=\"pb_'+str(y)+' list-group-item\"><p><h3>'+str(y)+'</h3></p>'
-    html += '\n  <ul>'
+    html += '\n  <ul class=\"list-group\">'
     for k in keys:
         v = pb[k]
         print(v)
         print('\n')
         if 'TITLE' in v or 'BOOKTITLE' in v:
-            html+='\n   <li>'
+            html+='\n   <li class=\"list-group-item\" name=\"'+k+'\">'
             if 'TITLE' in v:
                 html+='\n    <span>'+v['TITLE']+'</span>'
             else:
@@ -131,6 +158,7 @@ for y in years:
             
             if 'URL' in v:
                 html+='\n    <span>[<a href=\"'+v['URL']+'\">PDF</a>]</span>'
+            
             html+='\n     <br>'
             if 'AUTHOR' in v:
                 authors = split_authors(v['AUTHOR'])
@@ -146,6 +174,28 @@ for y in years:
                     if n != num -1:
                         html+=','
                 html+='</span>\n    <br>'
+            if 'TITLE' in v and 'BOOKTITLE' in v:
+                html+='\n    <span>'+v['BOOKTITLE']+'</span>\n    <br>'
+            if 'PUBLISHER' in v:
+                html+='\n    <span>'+v['PUBLISHER']+'</span>\n    <br>'
+            if 'YEAR' in v and 'MONTH' in v:
+                html+='\n    <span>'+v['MONTH']+', '+v['YEAR']+'</span>\n    <br>'
+            if 'CROSSREF' in v:
+                ll = split_crossref(v['CROSSREF'])
+                html+='\n    <span>Related: '
+                for a in ll:
+                    if a in p:
+                        av = p[a]
+                        if 'TYPE' in av and av['TYPE']=='person':  
+                            html+='[<a href=\"\\People.html#'+a+'\">'+a+'</a>]'
+                        elif 'TYPE' in av and av['TYPE']=='software':  
+                            html+='[<a href=\"\\Software.html#'+a+'\">'+a+'</a>]'
+                        else:
+                            html+='[<a href=\"\\Publications.html#'+a+'\">'+a+'</a>]'
+                html+='\n     </span>\n    <br>'
+                        
+                                       
+                
 #            if 'NOTES' in v:
 #               html+='\n    <span>Note:'+v['NOTES']+'</span><br>'
 #            elif 'NOTE' in v:
