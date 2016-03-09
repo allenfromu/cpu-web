@@ -28,7 +28,7 @@ for k in p:
     else:
         pb[k] = v
 
-f1 = open('../People.html', 'w')
+f1 = open('./People.html', 'w')
 
 
 html = '<ul>'
@@ -69,7 +69,7 @@ f1.write(html)
 f1.close()
 print('\n\n')
 
-f2 = open('../Software.html', 'w')
+f2 = open('./Software.html', 'w')
 html = '<ul>'
 for k in sw:
     v = sw[k]
@@ -126,7 +126,7 @@ def get_author_url(name):
             
 
 
-f3 = open('../Publications.html', 'w')
+f3 = open('./Publications.html', 'w')
 
 #(key, year) tuple of pb
 years = []
