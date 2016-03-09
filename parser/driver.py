@@ -20,14 +20,13 @@ pb = {}
 
 for k in p:
     v = p[k]
-    if 'TYPE' in v and v['TYPE'] == 'person':
+    if 'TYPE' in v and v['TYPE'].upper() == 'PERSON':
         people[k] = v
-    elif 'TYPE' in v and (v['TYPE'] == 'software' or v['TYPE'] == 'sw'):
+    elif 'TYPE' in v and (v['TYPE'].upper() == 'SOFTWARE' or v['TYPE'].upper() == 'SW'):
         sw[k] = v
     else:
         pb[k] = v
 
-#print(sw)
 f1 = open('../People.html', 'w')
 
 html = '<ul>'
@@ -35,7 +34,7 @@ for k in people:
     v = people[k]
     html+='\n<li>'
     if 'TITLE' in v:
-        html = '\n<p>\n<span name = \"'+k+'\">'
+        html += '\n<p>\n<span name = \"'+k+'\">'
         if 'URL' in v and len(v['URL']) > 2:
             html+='\n<a href=\"'+v['URL']+'\">'+v['TITLE']
             html+='</a>'
@@ -48,7 +47,8 @@ for k in people:
             html+=v['NOTES']+'\n</span>'
         if 'CROSSREF' in v:
             ll = split_crossref(v['CROSSREF'])
-            html+='\n   <br> <span>Related: '
+            print(ll)
+            html+='\n   <br> <span>Crossref: '
             for a in ll:
                 if a in p:
                     av = p[a]
@@ -85,7 +85,7 @@ for k in sw:
             html+=v['NOTES']+'\n</span>'
         if 'CROSSREF' in v:
             ll = split_crossref(v['CROSSREF'])
-            html+='\n    <br><span>Related: '
+            html+='\n    <br><span>Crossref: '
             for a in ll:
                 if a in p:
                     av = p[a]
@@ -116,8 +116,9 @@ def split_authors(s):
 def get_author_url(name):
     for k in people:
         v = people[k]
-        if 'TITLE' in v and v['TITLE'].strip() == name and 'URL' in v:
-            return v['URL']
+        if 'TITLE' in v and v['TITLE'].strip() == name:
+            url = '/People.html#'+k
+            return url
     return None
             
 
@@ -147,8 +148,6 @@ for y in years:
     html += '\n  <ul class=\"list-group\">'
     for k in keys:
         v = pb[k]
-        print(v)
-        print('\n')
         if 'TITLE' in v or 'BOOKTITLE' in v:
             html+='\n   <li class=\"list-group-item\" name=\"'+k+'\">'
             if 'TITLE' in v:
@@ -182,7 +181,7 @@ for y in years:
                 html+='\n    <span>'+v['MONTH']+', '+v['YEAR']+'</span>\n    <br>'
             if 'CROSSREF' in v:
                 ll = split_crossref(v['CROSSREF'])
-                html+='\n    <span>Related: '
+                html+='\n    <span>Crossref: '
                 for a in ll:
                     if a in p:
                         av = p[a]

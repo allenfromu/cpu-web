@@ -7,6 +7,7 @@ class Parser:
         self.input = input
         self.entries = {}
         self.pos = 0
+        self.unique_key = True
         self.currentEntry = ""
         self.strings = {
             'JAN': "January",
@@ -91,7 +92,7 @@ class Parser:
             return self.value_quotes()
         else:
             k = self.key()
-            if k.upper() in self.strings:
+            if k in self.strings:
                 return self.strings[k]
             elif re.match("^[0-9]+$", k) is not None:
                 return k
@@ -102,7 +103,7 @@ class Parser:
         values = self.single_value()
         while self.tryMatch('#'):
             self.match('#')
-            values+=self.single_value
+            values+=self.single_value()
         return values
         
     def key(self):
@@ -114,7 +115,10 @@ class Parser:
             if re.match("[a-zA-z0-9_:\\./-]", self.input[self.pos]) is not None:
                 self.pos += 1
             else:
-                return self.input[start: self.pos].upper()
+                if self.unique_key:
+                    return self.input[start:self.pos]
+                else:
+                    return self.input[start: self.pos].upper()
 
     def key_value(self):
         k = self.key()
@@ -136,7 +140,9 @@ class Parser:
             self.entries[self.currentEntry][kv[0]] = kv[1]
 
     def entry_body(self):
+        self.unique_key = True
         self.currentEntry = self.key()
+        self.unique_key = False
         self.entries[self.currentEntry] = {}
         self.match(",")
         self.key_value_list()
