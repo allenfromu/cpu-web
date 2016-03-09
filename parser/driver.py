@@ -20,6 +20,7 @@ pb = {}
 
 for k in p:
     v = p[k]
+    #print(k)
     if 'TYPE' in v and v['TYPE'].upper() == 'PERSON':
         people[k] = v
     elif 'TYPE' in v and (v['TYPE'].upper() == 'SOFTWARE' or v['TYPE'].upper() == 'SW'):
@@ -29,12 +30,13 @@ for k in p:
 
 f1 = open('../People.html', 'w')
 
+
 html = '<ul>'
 for k in people:
     v = people[k]
     html+='\n<li>'
     if 'TITLE' in v:
-        html += '\n<p>\n<span name = \"'+k+'\">'
+        html += '\n<p>\n<span id = \"'+k+'\">'
         if 'URL' in v and len(v['URL']) > 2:
             html+='\n<a href=\"'+v['URL']+'\">'+v['TITLE']
             html+='</a>'
@@ -47,9 +49,10 @@ for k in people:
             html+=v['NOTES']+'\n</span>'
         if 'CROSSREF' in v:
             ll = split_crossref(v['CROSSREF'])
-            print(ll)
+            #print(ll)
             html+='\n   <br> <span>Crossref: '
             for a in ll:
+                print(a)
                 if a in p:
                     av = p[a]
                     if 'TYPE' in av and av['TYPE']=='person':  
@@ -64,7 +67,7 @@ for k in people:
 html += '\n</ul>'
 f1.write(html)
 f1.close()
-
+print('\n\n')
 
 f2 = open('../Software.html', 'w')
 html = '<ul>'
@@ -72,7 +75,7 @@ for k in sw:
     v = sw[k]
     if 'TITLE' in v:
         html +='\n<li>'
-        html += '\n<p>\n<span name=\"'+k+'\">'
+        html += '\n<p>\n<span id=\"'+k+'\">'
         if 'URL' in v and len(v['URL']) > 2:
             html+='\n<a href=\"'+v['URL']+'\">'+v['TITLE']
             html+='</a>'
@@ -149,7 +152,7 @@ for y in years:
     for k in keys:
         v = pb[k]
         if 'TITLE' in v or 'BOOKTITLE' in v:
-            html+='\n   <li class=\"list-group-item\" name=\"'+k+'\">'
+            html+='\n   <li class=\"list-group-item\"><div id=\"'+k+'\">'
             if 'TITLE' in v:
                 html+='\n    <span>'+v['TITLE']+'</span>'
             else:
@@ -200,7 +203,7 @@ for y in years:
 #            elif 'NOTE' in v:
 #             html+='\n    <span>Note:'+v['NOTE']+'</span><br>'
                 
-            html+='\n   </li>'
+            html+='\n  </div> </li>'
     html+='\n  </ul>'
     html+='<span class=\"badge\">'+str(len(keys))+'</span>'
     html+='\n </li>'
