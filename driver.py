@@ -50,7 +50,7 @@ def get_people():
             if 'CROSSREF' in v:
                 ll = split_crossref(v['CROSSREF'])
                 #print(ll)
-                html+='\n   <br> <span>Crossref: '
+                html+='\n   <br> <span>Related: '
                 for a in ll:
                     if a in p:
                         av = p[a]
@@ -90,7 +90,7 @@ def get_sw():
                 html+=v['NOTES']+'\n</span>'
             if 'CROSSREF' in v:
                 ll = split_crossref(v['CROSSREF'])
-                html+='\n    <br><span>Crossref: '
+                html+='\n    <br><span>Related: '
                 for a in ll:
                     if a in p:
                         av = p[a]
@@ -190,7 +190,7 @@ def get_pb():
                     html+='\n    <span>'+v['MONTH']+', '+v['YEAR']+'</span>\n    <br>'
                 if 'CROSSREF' in v:
                     ll = split_crossref(v['CROSSREF'])
-                    html+='\n    <span>Crossref: '
+                    html+='\n    <span>Related: '
                     for a in ll:
                         if a in p:
                             av = p[a]
