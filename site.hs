@@ -5,10 +5,7 @@ import Data.Monoid (mappend, (<>))
 import Hakyll
 import System.Directory
 import System.Process
-import qualified CPython as Py
-import qualified CPython.Protocols.Object as Py
-import qualified CPython.Types as Py
-import qualified CPython.Types.Module as Py
+
 
 
 

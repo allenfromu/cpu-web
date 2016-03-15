@@ -66,6 +66,9 @@ def get_people():
     html += '\n</ul>'
     f1.write(html)
     f1.close()
+    return html
+
+get_people()
 
 f2 = open('./Software.html', 'w')
 def get_sw():
@@ -103,6 +106,9 @@ def get_sw():
     html+='\n</ul>'
     f2.write(html)
     f2.close()
+    return html
+
+get_sw()
 
 
 
@@ -202,7 +208,9 @@ def get_pb():
     html+='\n</ul>'
     f3.write(html)
     f3.close()
+    return html
 
+get_pb()
 
 
 

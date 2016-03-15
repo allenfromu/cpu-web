@@ -1,4 +1,4 @@
-python parser/driver.py
+python driver.py
 
 ghc --make site.hs
 
