@@ -37,7 +37,6 @@ def init(filename):
 
 
             
-print(p)
 
 def split_crossref(s):
     l = s.split(',')
@@ -70,7 +69,6 @@ def getPeople():
                 html+=v['NOTES']+'\n</span>'
             if 'CROSSREF' in v:
                 ll = split_crossref(v['CROSSREF'])
-                print(ll)
                 html+='\n   <br> <span>Related: '
                 for a in ll:
                     if a in p:
