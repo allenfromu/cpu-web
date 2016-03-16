@@ -1,10 +1,41 @@
 import parser
 import re
 
-file = open('test.bib', 'r')
-input = file.read()
 
-p = (parser.Parser(input)).getEntries()
+p = {}
+people = {}
+sw = {}
+pb = {}
+years = []
+year_keys = {}
+
+
+def init(filename):
+    file = open(filename, 'r')
+    input = file.read()
+    p = (parser.Parser(input)).getEntries()
+    for k in p:
+        v = p[k]
+        if 'TYPE' in v and v['TYPE'].upper() == 'PERSON':
+            people[k] = v
+        elif 'TYPE' in v and (v['TYPE'].upper() == 'SOFTWARE' or v['TYPE'].upper() == 'SW'):
+            sw[k] = v
+        else:
+            pb[k] = v
+    for k in pb:
+        v = pb[k]
+        if 'YEAR' in v:
+            year = int(v['YEAR'])
+            if year in year_keys:
+                year_keys[year].append(k)
+            else:
+                year_keys[year] = [k]
+                years.append(year)
+    years.sort()
+    years.reverse()
+
+
+            
 
 
 def split_crossref(s):
@@ -14,23 +45,12 @@ def split_crossref(s):
         ll.append(a.strip())
     return ll
 
-people = {}
-sw = {}
-pb = {}
 
-for k in p:
-    v = p[k]
-    #print(k)
-    if 'TYPE' in v and v['TYPE'].upper() == 'PERSON':
-        people[k] = v
-    elif 'TYPE' in v and (v['TYPE'].upper() == 'SOFTWARE' or v['TYPE'].upper() == 'SW'):
-        sw[k] = v
-    else:
-        pb[k] = v
 
-f1 = open('./People.html', 'w')
 
-def get_people():
+#f1 = open('./People.html', 'w')
+
+def getPeople():
     html = '<ul>'
     for k in people:
         v = people[k]
@@ -64,14 +84,13 @@ def get_people():
             html+='\n</p>\n'
         html+='\n</li>'
     html += '\n</ul>'
-    f1.write(html)
-    f1.close()
+#   f1.write(html)
+#   f1.close()
     return html
 
-get_people()
 
-f2 = open('./Software.html', 'w')
-def get_sw():
+#f2 = open('./Software.html', 'w')
+def getSoftware():
     html = '<ul>'
     for k in sw:
         v = sw[k]
@@ -104,11 +123,11 @@ def get_sw():
             html+='\n</p>\n'
             html+='</li>'
     html+='\n</ul>'
-    f2.write(html)
-    f2.close()
+#    f2.write(html)
+#    f2.close()
     return html
 
-get_sw()
+#get_sw()
 
 
 
@@ -131,25 +150,12 @@ def get_author_url(name):
             
 
 
-f3 = open('./Publications.html', 'w')
+#f3 = open('./Publications.html', 'w')
 
 #(key, year) tuple of pb
-years = []
-year_keys = {}
 
-for k in pb:
-    v = pb[k]
-    if 'YEAR' in v:
-        year = int(v['YEAR'])
-        if year in year_keys:
-            year_keys[year].append(k)
-        else:
-            year_keys[year] = [k]
-            years.append(year)
-            
-years.sort()
-years.reverse()
-def get_pb():
+
+def getPublications():
     html = '<ul class = \"list-group\">'
     for y in years:
         keys = year_keys[y]
@@ -206,11 +212,11 @@ def get_pb():
         html+='<span class=\"badge\">'+str(len(keys))+'</span>'
         html+='\n </li>'
     html+='\n</ul>'
-    f3.write(html)
-    f3.close()
+#    f3.write(html)
+#    f3.close()
     return html
 
-get_pb()
+#get_pb()
 
 
 

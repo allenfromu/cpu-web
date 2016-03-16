@@ -1,4 +1,8 @@
-python driver.py
+rm People.html
+rm Software.html
+rm Publications.html
+
+python test.py
 
 ghc --make site.hs
 
